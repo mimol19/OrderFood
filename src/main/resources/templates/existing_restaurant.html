@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>OrderFood</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>OrderFood</h1>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Go back to the main page</a>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <h2>Your menu</h2>
+
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>description</th>
+            <th>category</th>
+            <th>picture</th>
+            <th>price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="meal : ${mealList}">
+            <td th:text="${meal.name}"></td>
+            <td th:text="${meal.description}"></td>
+            <td th:text="${meal.category}"></td>
+            <td th:text="${meal.mealPhoto}"></td>
+            <td th:text="${meal.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="container">
+        <h2>Add another dish to menu</h2>
+        <form action="#" th:action="@{/menu}" method="POST" th:object="${mealDTO}">
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="name">Meal name:</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="name" th:field="*{name}">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="description">Description:</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="description" th:field="*{description}">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="category">Category:</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="category" th:field="*{category}">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="mealPhoto">Photo:</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="mealPhoto" th:field="*{mealPhoto}">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="price">Price:</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="price" th:field="*{price}">
+                </div>
+            </div>
+            <br>
+
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <input type="submit" value="Add" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+</div>
+</body>
+</html>
