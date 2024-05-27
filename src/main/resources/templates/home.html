@@ -11,13 +11,17 @@
 </head>
 <body>
 <div class="container">
+<!--    <h1>Welcome, <span th:text="${#authentication.name}">User</span>!</h1>-->
+    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>
+</div>
+<div class="container">
     <h1>OrderFood</h1>
     <div class="row mt-3">
         <div class="col-md-4">
             <a th:href="@{/restaurant}" class="btn btn-info" role="button">Restaurant</a>
         </div>
         <div class="col-md-4">
-            <a th:href="@{/some_page}" class="btn btn-info" role="button">Customer</a>
+            <a th:href="@{/street}" class="btn btn-info" role="button">Customer</a>
         </div>
     </div>
 </div>

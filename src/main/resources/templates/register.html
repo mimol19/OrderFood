@@ -22,32 +22,47 @@
         </div>
     </div>
     <br>
+    <br>
 </div>
-
-
-
 <div class="container">
     <h2>Create Restaurant</h2>
     <div class="col-md-6">
-        <form action="#" th:action="@{/add_restaurant}" method="POST" th:object="${restaurantDTO}">
+        <form action="#" th:action="@{/sign_in}" method="POST" th:object="${userEntity}">
             <div class="row mt-3">
-                <h3>Name your restaurant:</h3>
                 <div class="row mt-3">
                     <div class="col-md-3">
-                        <input type="text" id="name" th:field="*{name}">
+                        <label for="username">Username:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="username" name="username" th:field="*{userName}">
                     </div>
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label for="email">Your email:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="email" th:field="*{email}">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label for="password">Password:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="password" id="password" name="password"th:field="*{password}">
+                    </div>
+                </div>
+
                 <br>
             </div>
             <div class="row mt-3">
                 <div class="col-md-6">
-                    <input type="submit" value="Create!" class="btn btn-success">
+                    <input type="submit" value="Sign in!" class="btn btn-success">
                 </div>
             </div>
         </form>
     </div>
 </div>
-<br>
-<br>
 </body>
 </html>

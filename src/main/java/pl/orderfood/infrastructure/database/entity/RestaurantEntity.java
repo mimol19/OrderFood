@@ -2,6 +2,7 @@ package pl.orderfood.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.orderfood.infrastructure.security.UserEntity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,17 +23,14 @@ public class RestaurantEntity {
     private Integer restaurantId;
     @Column(name = "name")
     private String name;
-    @Column(name = "owner_name")
-    private String ownerName;
-    @Column(name = "owner_surname")
-    private String ownerSurname;
-    @Column(name = "email")
-    private String email;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    private UserEntity user;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
     private Set<OrderEntity> orders;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
     private Set<MealEntity> meals;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
     private Set<DeliveryAddressEntity> deliveryAddresses;
+
 
 }

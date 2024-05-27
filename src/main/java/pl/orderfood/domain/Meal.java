@@ -1,13 +1,13 @@
 package pl.orderfood.domain;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.orderfood.infrastructure.database.entity.CategoryEnum;
 
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-
 @With
 @Value
 @Builder
@@ -18,7 +18,7 @@ public class Meal {
     String name;
     String description;
     CategoryEnum category;
-    byte[] mealPhoto;
+    String mealPhoto;
     BigDecimal price;
     Restaurant restaurant;
     Set<Item> itemList;

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MenuServiceController {
     public static final String CREATE_MEAL = "/menu";
 
-    @PostMapping(value = CREATE_MEAL)
-    public String createMeal(Model model) {
-        model.addAttribute(model);
-        return "menu";
-
-    }
+//    @PostMapping(value = CREATE_MEAL)
+//    public String createMeal(Model model) {
+//        model.addAttribute(model);
+//        return "menu";
+//
+//    }
 
 }

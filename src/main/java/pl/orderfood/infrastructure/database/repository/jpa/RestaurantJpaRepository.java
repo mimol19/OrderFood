@@ -7,4 +7,5 @@ import pl.orderfood.infrastructure.database.entity.RestaurantEntity;
 
 @Repository
 public interface RestaurantJpaRepository extends JpaRepository<RestaurantEntity,Integer> {
+    RestaurantEntity findByName(String name);
 }

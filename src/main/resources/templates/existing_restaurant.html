@@ -27,71 +27,79 @@
 
     <h2>Your menu</h2>
 
-    <table class="table">
-        <thead class="table-dark">
-        <tr>
-            <th>Name</th>
-            <th>description</th>
-            <th>category</th>
-            <th>picture</th>
-            <th>price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="meal : ${mealList}">
-            <td th:text="${meal.name}"></td>
-            <td th:text="${meal.description}"></td>
-            <td th:text="${meal.category}"></td>
-            <td th:text="${meal.mealPhoto}"></td>
-            <td th:text="${meal.price}"></td>
-        </tr>
-        </tbody>
-    </table>
+<!--    <table class="table">-->
+<!--        <thead class="table-dark">-->
+<!--        <tr>-->
+<!--            <th>Name</th>-->
+<!--            <th>description</th>-->
+<!--            <th>category</th>-->
+<!--            <th>picture</th>-->
+<!--            <th>price</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="meal : ${mealList}">-->
+<!--            <td th:text="${meal.name}"></td>-->
+<!--            <td th:text="${meal.description}"></td>-->
+<!--            <td th:text="${meal.category}"></td>-->
+<!--            <td><img th:src="'data:image/jpeg;base64,' + ${meal.mealPhoto}" alt="Meal Photo"/></td>-->
+<!--            <td th:text="${meal.price}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
     <div class="container">
         <h2>Add another dish to menu</h2>
-        <form action="#" th:action="@{/menu}" method="POST" th:object="${mealDTO}">
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <label for="name">Meal name:</label>
+        <form action="#" th:action="@{/add_meal}" method="POST" enctype="multipart/form-data">
+            <div th:object="${mealDTO}">
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label for="name">Meal name:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="name" th:field="*{name}">
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <input type="text" id="name" th:field="*{name}">
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label for="description">Description:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="description" th:field="*{description}">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label for="category">Category:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="category" th:field="*{category}">
+                            <option th:each="category : ${T(pl.orderfood.infrastructure
+                        .database.entity.CategoryEnum).values()}"
+                                    th:value="${category}" th:text="${category}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label for="price">Price:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="price" th:field="*{price}">
+                    </div>
                 </div>
             </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <label for="description">Description:</label>
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="description" th:field="*{description}">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <label for="category">Category:</label>
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="category" th:field="*{category}">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <label for="mealPhoto">Photo:</label>
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="mealPhoto" th:field="*{mealPhoto}">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <label for="price">Price:</label>
-                </div>
-                <div class="col-md-3">
-                    <input type="text" id="price" th:field="*{price}">
+            <div th:object="${photo}">
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label for="Photo">Photo:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="file" id="Photo" name="Photo" accept="image/jpeg">
+                    </div>
                 </div>
             </div>
             <br>
-
             <div class="row mt-3">
                 <div class="col-md-12">
                     <input type="submit" value="Add" class="btn btn-success">

@@ -2,6 +2,7 @@ package pl.orderfood.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -15,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "restaurant")
+@Table(name = "meal")
 public class MealEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +30,7 @@ public class MealEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
     private CategoryEnum category;
-    @Lob
-    @Column(columnDefinition = "bytea")
+    @Column(name = "meal_photo", columnDefinition = "bytea")
     private byte[] mealPhoto;
     @Column(name = "price")
     private BigDecimal price;

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.orderfood.business.dao.MealDAO;
 import pl.orderfood.domain.Meal;
 
@@ -14,16 +15,15 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class MealService {
-private final MealDAO mealDAO;
+    private final MealDAO mealDAO;
 
-//TO DO PRZEPISAĆ METODE
-    public List<Meal> getRestaurantMeals() {
-        List<Meal> meals = mealDAO.getAll();
+    public List<Meal> getRestaurantMeals(String username) {
+        List<Meal> meals = mealDAO.getRestaurantMeals(username);
         return meals;
     }
 
-
-    public void saveMeal(Meal meal) {
-
+    @Transactional
+    public Meal saveMeal(Meal meal, String username) {
+        return mealDAO.saveMeal(meal,username);
     }
 }

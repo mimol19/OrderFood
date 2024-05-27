@@ -1,6 +1,7 @@
 package pl.orderfood.api.dto;
 
 import lombok.*;
+import pl.orderfood.infrastructure.security.UserEntity;
 
 import java.util.Set;
 @ToString(of = "name")
@@ -11,9 +12,7 @@ import java.util.Set;
 public class RestaurantDTO {
     Integer restaurantId;
     String name;
-    String email;
-    String ownerName;
-    String ownerSurname;
+    UserEntity user;
     Set<OrderDTO> orders;
     Set<MealDTO> meals;
     Set<DeliveryAddressDTO> deliveryAddresses;

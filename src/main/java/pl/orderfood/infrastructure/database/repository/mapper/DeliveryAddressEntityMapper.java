@@ -7,8 +7,8 @@ import org.mapstruct.ReportingPolicy;
 import pl.orderfood.domain.DeliveryAddress;
 import pl.orderfood.infrastructure.database.entity.DeliveryAddressEntity;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DeliveryAddressEntityMapper {
-    @Mapping(target = "restaurant.", ignore = true)
-    DeliveryAddress mapFromEntity(DeliveryAddressEntity entity);
-}
+//@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+//public interface DeliveryAddressEntityMapper {
+//    @Mapping(target = "restaurant.", ignore = true)
+//    DeliveryAddress mapFromEntity(DeliveryAddressEntity entity);
+//}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.orderfood.business.dao.RestaurantDAO;
 import pl.orderfood.domain.Meal;
 import pl.orderfood.domain.Restaurant;
+import pl.orderfood.infrastructure.database.entity.RestaurantEntity;
 
 
 import java.util.List;
@@ -24,8 +25,9 @@ public class RestaurantService {
     }
 
     @Transactional
-    public Restaurant saveRestaurant(Restaurant restaurant) {
-        return restaurantDAO.saveRestaurant(restaurant);
+    public Restaurant saveRestaurant(Restaurant restaurant, String username) {
+        return restaurantDAO.saveRestaurant(restaurant, username);
     }
+
 }
 

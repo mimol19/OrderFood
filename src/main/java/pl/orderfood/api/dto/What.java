@@ -28,11 +28,11 @@ public class What {
         this.mark = mark;
     }
 
-    @Override
-    public String toString() {
-        return "What{" +
-                "mark='" + mark + '\'' +
-                ", model='" + model + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "What{" +
+//                "mark='" + mark + '\'' +
+//                ", model='" + model + '\'' +
+//                '}';
+//    }
 }
