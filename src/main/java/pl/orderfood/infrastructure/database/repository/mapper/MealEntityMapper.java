@@ -25,8 +25,8 @@ public interface MealEntityMapper {
     Meal mapFromEntity(MealEntity meal);
 
     @Named("Base64ToBytes")
-    static byte[] multipartFileToBytes(String base64) {
-        return Base64.getDecoder().decode(base64);
+    static byte[] Base64ToBytes(String base64) {
+        return base64 != null ?Base64.getDecoder().decode(base64) : null;
     }
 
 

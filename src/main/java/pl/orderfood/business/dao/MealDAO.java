@@ -12,4 +12,6 @@ public interface MealDAO {
     List<Meal> getRestaurantMeals(String username);
 
     Meal saveMeal(Meal meal, String username);
+
+    List<Meal> getMealsByRestaurant(Integer id);
 }

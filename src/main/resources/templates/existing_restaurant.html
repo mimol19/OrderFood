@@ -8,11 +8,24 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
           crossorigin="anonymous">
     <title>OrderFood</title>
+    <style>
+        .meal-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+
+    </style>
 </head>
 
 <body>
 <div class="container">
     <h1>OrderFood</h1>
+</div>
+
+<div class="container">
+    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>
 </div>
 
 <div class="container">
@@ -27,26 +40,26 @@
 
     <h2>Your menu</h2>
 
-<!--    <table class="table">-->
-<!--        <thead class="table-dark">-->
-<!--        <tr>-->
-<!--            <th>Name</th>-->
-<!--            <th>description</th>-->
-<!--            <th>category</th>-->
-<!--            <th>picture</th>-->
-<!--            <th>price</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="meal : ${mealList}">-->
-<!--            <td th:text="${meal.name}"></td>-->
-<!--            <td th:text="${meal.description}"></td>-->
-<!--            <td th:text="${meal.category}"></td>-->
-<!--            <td><img th:src="'data:image/jpeg;base64,' + ${meal.mealPhoto}" alt="Meal Photo"/></td>-->
-<!--            <td th:text="${meal.price}"></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>description</th>
+            <th>category</th>
+            <th>picture</th>
+            <th>price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="meal : ${mealList}">
+            <td th:text="${meal.name}"></td>
+            <td th:text="${meal.description}"></td>
+            <td th:text="${meal.category}"></td>
+            <td><img th:src="'data:image/jpeg;base64,' + ${meal.mealPhoto}" alt="Meal Photo" class="meal-photo"/></td>
+            <td th:text="${meal.price}"></td>
+        </tr>
+        </tbody>
+    </table>
     <div class="container">
         <h2>Add another dish to menu</h2>
         <form action="#" th:action="@{/add_meal}" method="POST" enctype="multipart/form-data">
@@ -89,17 +102,32 @@
                     </div>
                 </div>
             </div>
-            <div th:object="${photo}">
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <label for="Photo">Photo:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="file" id="Photo" name="Photo" accept="image/jpeg">
-                    </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="photo">Photo:</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="file" id="photo" name="photo" accept="image/jpeg">
                 </div>
             </div>
             <br>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <input type="submit" value="Add" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+        <br>
+        <h2>Add streets you deliver your food to:</h2>
+        <form action="#" th:action="@{/add_delivery_street}" method="POST" th:object="${addressDTO}">
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <label for="street">Street:</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" id="street" th:field="*{name}">
+                </div>
+            </div>
             <div class="row mt-3">
                 <div class="col-md-12">
                     <input type="submit" value="Add" class="btn btn-success">

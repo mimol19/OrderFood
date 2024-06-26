@@ -1,7 +1,7 @@
 CREATE TABLE food_order
 (
     order_id            SERIAL     NOT NULL,
-    order_number        INT         NOT NULL,
+    order_number        VARCHAR(64)       NOT NULL,
     restaurant_id       INT         NOT NULL,
     customer_id         INT         NOT NULL,
     PRIMARY KEY (order_id),

@@ -1,14 +1,11 @@
 package pl.orderfood.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 
 
 @Data
 @Builder
+@ToString(of = {"quantity","meal"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDTO {

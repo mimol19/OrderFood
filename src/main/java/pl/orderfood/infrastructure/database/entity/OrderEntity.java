@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,7 +22,7 @@ public class OrderEntity {
     @Column(name = "order_id")
     private Integer orderId;
     @Column(name = "order_number")
-    private Integer orderNumber;
+    private String orderNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
@@ -32,5 +33,5 @@ public class OrderEntity {
     private CustomerEntity customer;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
-    private Set<ItemEntity> itemList;
+    private List<ItemEntity> itemList;
 }
