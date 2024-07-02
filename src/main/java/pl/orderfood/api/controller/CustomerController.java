@@ -14,6 +14,7 @@ import pl.orderfood.domain.Customer;
 import pl.orderfood.domain.Order;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,15 +56,21 @@ public class CustomerController {
     @PostMapping("/select_restaurant/{restaurantId}")
     public String selectRestaurant(@PathVariable Integer restaurantId, Model model) {
         List<MealDTO> mealList = getMealsByRestaurant(restaurantId);
+        OrderDTO orderDTO = new OrderDTO();
+        List<ItemDTO> itemList = new ArrayList<>();
+
         for (MealDTO meal : mealList) {
+            ItemDTO item = new ItemDTO();
+            item.setMeal(meal);
+            itemList.add(item);
             System.out.println(meal);
         }
-        model.addAttribute("mealList", mealList);
+
+        orderDTO.setItemList(itemList);
+        for (ItemDTO item : itemList) {
+            System.out.println(item);
+        }
         model.addAttribute("restaurantId", restaurantId);
-
-        OrderDTO orderDTO = new OrderDTO();
-
-
         model.addAttribute("orderDTO", orderDTO);
 
         return "menu";
