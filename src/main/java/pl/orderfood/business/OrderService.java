@@ -10,6 +10,7 @@ import pl.orderfood.domain.Item;
 import pl.orderfood.domain.Meal;
 import pl.orderfood.domain.Order;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -26,4 +27,10 @@ public class OrderService {
         order.setCustomer(customer);
         return orderDAO.saveOrder(order);
     }
+
+    public List<Order> getRestaurantOrders(String username) {
+
+        return orderDAO.getRestaurantOrders(username);
+    }
+
 }

@@ -53,16 +53,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item, iterStat : *{itemList}">
-                <td th:text="${item.meal.name}"></td>
-                <td th:text="${item.meal.description}"></td>
-                <td th:text="${item.meal.category}"></td>
-                <td><img th:src="'data:image/jpeg;base64,' + ${item.meal.mealPhoto}" alt="Meal Photo" class="meal-photo"/></td>
-                <td th:text="${item.meal.price}"></td>
+            <tr th:each="meal, iterStat : ${mealList}">
+                <td th:text="${meal.name}"></td>
+                <td th:text="${meal.description}"></td>
+                <td th:text="${meal.category}"></td>
+                <td><img th:src="'data:image/jpeg;base64,' + ${meal.mealPhoto}" alt="Meal Photo" class="meal-photo"/></td>
+                <td th:text="${meal.price}"></td>
                 <td>
                     <input type="text" th:field="*{itemList[__${iterStat.index}__].quantity}"/>
-                    <input type="hidden" th:field="*{itemList[__${iterStat.index}__].meal.mealId}" th:value="*{itemList[__${iterStat.index}__].meal.mealId}"/>
+                    <input type="hidden" th:field="*{itemList[__${iterStat.index}__].meal.mealId}" th:value="${meal.mealId}"/>
                 </td>
+            </tr>
             </tbody>
         </table>
         <br>

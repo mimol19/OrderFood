@@ -48,7 +48,14 @@ public class AddressRepository implements AddressDAO {
     @Override
     public Address saveAddress(Address address) {
         AddressEntity toSave = addressEntityMapper.mapToEntity(address);
-        System.out.println(toSave);
+
+        Optional<AddressEntity> existingAddress = addressJpaRepository.
+                findByNameAndNumber(toSave.getName(), toSave.getNumber());
+
+        if (existingAddress.isPresent()) {
+            return addressEntityMapper.mapFromEntity(existingAddress.get());
+        }
+
         AddressEntity saved = addressJpaRepository.save(toSave);
         return addressEntityMapper.mapFromEntity(saved);
     }

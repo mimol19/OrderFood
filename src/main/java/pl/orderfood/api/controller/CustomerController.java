@@ -28,7 +28,6 @@ public class CustomerController {
     private final OrderService orderService;
     private final MealMapper mealMapper;
     private final OrderMapper orderMapper;
-    private final CustomerMapper customerMapper;
     private final AddressMapper addressMapper;
 
     @GetMapping("/street")
@@ -41,8 +40,7 @@ public class CustomerController {
 
     @GetMapping("/find_restaurant")
     public String findRestaurants(@ModelAttribute("addressDTO") AddressDTO addressDTO,
-                                  Model model,
-                                  Principal principal) {
+                                  Model model) {
         System.out.println("ffffffffffffffffffffffffffffffffffffffffssssssssssssssssssssssssssssssss");
         System.out.println(addressDTO);
         Address address = addressMapper.mapFromDTO(addressDTO);
@@ -71,6 +69,7 @@ public class CustomerController {
             System.out.println(item);
         }
         model.addAttribute("restaurantId", restaurantId);
+        model.addAttribute("mealList", mealList);
         model.addAttribute("orderDTO", orderDTO);
 
         return "menu";
@@ -88,17 +87,14 @@ public class CustomerController {
             System.out.println(item);
         }
 
-
         RestaurantDTO restaurantDTO = new RestaurantDTO();
         restaurantDTO.setRestaurantId(Integer.valueOf(restaurantId));
         orderDTO.setRestaurant(restaurantDTO);
 
         Order order = orderMapper.mapFromDTO(orderDTO);
 
-//        Customer customer = customerMapper.mapFromDTO(customerDTO);
-
         orderService.saveOrderAndCustomer(order);
-        return "home";
+        return "order";
     }
     private List<MealDTO> getMealsByRestaurant(Integer id) {
         return mealService.getMealsByRestaurant(id).stream()

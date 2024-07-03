@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>OrderFood</title>
+    <style>
+        .meal-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>OrderFood</h1>
+</div>
+
+<div class="container">
+    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>
+</div>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Go back to the main page</a>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <h2>Your menu</h2>
+
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th>Order Number:</th>
+            <th>Customer:</th>
+            <th>Delivery Address:</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orderList}">
+            <td th:text="${order.orderNumber}"></td>
+            <td th:text="${order.customer.name}"></td>
+            <td th:text="${order.customer.address.name}"></td>
+            <td>
+            <a th:href="@{/order_details/{orderId=${order.id}}" class="btn btn-info" role="button">Ordered meals</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
