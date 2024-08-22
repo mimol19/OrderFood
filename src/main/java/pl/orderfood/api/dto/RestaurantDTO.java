@@ -4,7 +4,7 @@ import lombok.*;
 import pl.orderfood.infrastructure.security.UserEntity;
 
 import java.util.Set;
-@ToString(of = "name")
+@ToString(of = {"restaurantId","name"})
 @Data
 @Builder
 @NoArgsConstructor

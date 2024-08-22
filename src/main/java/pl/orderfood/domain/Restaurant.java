@@ -1,11 +1,8 @@
 package pl.orderfood.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
 import pl.orderfood.infrastructure.security.UserEntity;
 
-
-import java.util.HashSet;
 import java.util.Set;
 
 @With

@@ -3,6 +3,7 @@ package pl.orderfood.business;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.orderfood.api.dto.RestaurantDTO;
 import pl.orderfood.business.dao.AddressDAO;
@@ -15,7 +16,7 @@ import pl.orderfood.infrastructure.database.entity.RestaurantEntity;
 
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class RestaurantService {

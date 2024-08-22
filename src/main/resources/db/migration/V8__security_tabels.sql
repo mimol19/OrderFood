@@ -14,6 +14,7 @@ CREATE TABLE order_food_user
             REFERENCES restaurant (restaurant_id)
 );
 
+
 --CREATE TABLE users (
 --    id INT PRIMARY KEY AUTO_INCREMENT,
 --    username VARCHAR(50) NOT NULL,

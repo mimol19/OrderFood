@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class OrderDTO {
     private Integer orderId;
-    private Integer orderNumber;
+    private String orderNumber;
     private RestaurantDTO restaurant;
     private CustomerDTO customer;
     private List<ItemDTO> itemList;

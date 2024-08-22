@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(of = "name")
+@ToString(of = {"name","mealId"})
 public class MealDTO {
     Integer mealId;
     String name;

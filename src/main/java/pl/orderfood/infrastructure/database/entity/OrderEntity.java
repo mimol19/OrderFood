@@ -22,7 +22,7 @@ public class OrderEntity {
     @Column(name = "order_id")
     private Integer orderId;
     @Column(name = "order_number")
-    private Integer orderNumber;
+    private String orderNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
