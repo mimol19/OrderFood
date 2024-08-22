@@ -3,6 +3,7 @@ package pl.orderfood.api.dto;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -14,6 +15,7 @@ public class OrderDTO {
     private Integer orderNumber;
     private RestaurantDTO restaurant;
     private CustomerDTO customer;
-    private Set<MealDTO> mealList;
+    private List<ItemDTO> itemList;
 }
+
 

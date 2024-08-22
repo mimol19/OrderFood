@@ -9,6 +9,7 @@ import pl.orderfood.business.dao.MealDAO;
 import pl.orderfood.domain.Meal;
 
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -18,12 +19,15 @@ public class MealService {
     private final MealDAO mealDAO;
 
     public List<Meal> getRestaurantMeals(String username) {
-        List<Meal> meals = mealDAO.getRestaurantMeals(username);
-        return meals;
+        return mealDAO.getRestaurantMeals(username);
     }
 
     @Transactional
     public Meal saveMeal(Meal meal, String username) {
         return mealDAO.saveMeal(meal,username);
+    }
+
+    public List<Meal> getMealsByRestaurant(Integer id) {
+        return mealDAO.getMealsByRestaurant(id);
     }
 }

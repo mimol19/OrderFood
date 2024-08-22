@@ -21,7 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-
+@EnableWebSecurity
 public class SecurityConfiguration {
 
     @Bean
@@ -58,20 +58,18 @@ public class SecurityConfiguration {
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/login", "/", "/register", "/customer", "/error"
-                            ,"/images/oh_no.png","/sign_in", "/logoutpage").permitAll();
+                            ,"/images/oh_no.png","/sign_in").permitAll();
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll())
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/logoutpage")
+                        .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll());
         return http.build();
-
     }
 
     @Bean
@@ -84,6 +82,7 @@ public class SecurityConfiguration {
                         .permitAll())
                 .build();
     }
+
 
 
 }

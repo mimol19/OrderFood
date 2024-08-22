@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -32,5 +33,5 @@ public class OrderEntity {
     private CustomerEntity customer;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
-    private Set<ItemEntity> itemList;
+    private List<ItemEntity> itemList;
 }
