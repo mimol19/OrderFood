@@ -10,12 +10,12 @@ import pl.orderfood.business.MealService;
 import pl.orderfood.business.OrderService;
 import pl.orderfood.business.RestaurantService;
 import pl.orderfood.domain.Address;
-import pl.orderfood.domain.Customer;
+
 import pl.orderfood.domain.Order;
 
-import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -27,7 +27,6 @@ public class CustomerController {
     private final OrderService orderService;
     private final MealMapper mealMapper;
     private final OrderMapper orderMapper;
-    private final CustomerMapper customerMapper;
     private final AddressMapper addressMapper;
 
     @GetMapping("/street")
@@ -40,8 +39,7 @@ public class CustomerController {
 
     @GetMapping("/find_restaurant")
     public String findRestaurants(@ModelAttribute("addressDTO") AddressDTO addressDTO,
-                                  Model model,
-                                  Principal principal) {
+                                  Model model) {
         System.out.println("ffffffffffffffffffffffffffffffffffffffffssssssssssssssssssssssssssssssss");
         System.out.println(addressDTO);
         Address address = addressMapper.mapFromDTO(addressDTO);
@@ -56,34 +54,46 @@ public class CustomerController {
     public String selectRestaurant(@PathVariable Integer restaurantId, Model model) {
         List<MealDTO> mealList = getMealsByRestaurant(restaurantId);
         OrderDTO orderDTO = new OrderDTO();
+        List<ItemDTO> itemList = new ArrayList<>();
 
-        model.addAttribute("mealList", mealList);
+        for (MealDTO meal : mealList) {
+            ItemDTO item = new ItemDTO();
+            item.setMeal(meal);
+            itemList.add(item);
+            System.out.println(meal);
+        }
+
+        orderDTO.setItemList(itemList);
+        for (ItemDTO item : itemList) {
+            System.out.println(item);
+        }
         model.addAttribute("restaurantId", restaurantId);
+        model.addAttribute("mealList", mealList);
         model.addAttribute("orderDTO", orderDTO);
 
         return "menu";
     }
 
     @PostMapping("create_order")
-    public String addItem(@ModelAttribute("orderDTO") OrderDTO orderDTO){
+    public String addItem(@ModelAttribute("orderDTO") OrderDTO orderDTO,
+                          @ModelAttribute("customerDTO") CustomerDTO customerDTO,
+                          @RequestParam("restaurantId") String restaurantId
+    ) {
         System.out.println("ordeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
         System.out.println("Order Details:");
-        System.out.println("Restaurant ID: " + orderDTO.getRestaurant().getRestaurantId());
         System.out.println(orderDTO);
-
-
-
-        Order order = orderMapper.mapFromDTO(orderDTO);
-//        Customer customer = customerMapper.mapFromDTO(customerDTO);
-        orderService.saveOrderAndCustomer(order);
         for (ItemDTO item : orderDTO.getItemList()) {
             System.out.println(item);
         }
-     return "home";
-    }
 
-    private static List<ItemDTO> mealListToItemList(List<MealDTO> mealList) {
-        return mealList.stream().map(m -> ItemDTO.builder().meal(m).build()).toList();
+        RestaurantDTO restaurantDTO = new RestaurantDTO();
+        restaurantDTO.setRestaurantId(Integer.valueOf(restaurantId));
+        orderDTO.setRestaurant(restaurantDTO);
+
+        Order order = orderMapper.mapFromDTO(orderDTO);
+
+        orderService.saveOrderAndCustomer(order);
+        return "order";
     }
     private List<MealDTO> getMealsByRestaurant(Integer id) {
         return mealService.getMealsByRestaurant(id).stream()

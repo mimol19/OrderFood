@@ -10,6 +10,7 @@ import pl.orderfood.domain.Item;
 import pl.orderfood.domain.Meal;
 import pl.orderfood.domain.Order;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -18,11 +19,21 @@ import java.util.List;
 public class OrderService {
 
     private final OrderDAO orderDAO;
+    private final CustomerService customerService;
 
     @Transactional
     public Order saveOrderAndCustomer(Order order) {
-
-
+        Customer customer = customerService.saveCustomer(order.getCustomer());
+        order.setCustomer(customer);
         return orderDAO.saveOrder(order);
+    }
+
+    public List<Order> getRestaurantOrders(String username) {
+
+        return orderDAO.getRestaurantOrders(username);
+    }
+
+    public Order completeOrder(Integer orderId) {
+        return orderDAO.completeOrder(orderId);
     }
 }

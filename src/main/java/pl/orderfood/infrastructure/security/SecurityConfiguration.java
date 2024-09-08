@@ -58,17 +58,24 @@ public class SecurityConfiguration {
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/login", "/", "/register", "/customer", "/error"
-                            ,"/images/oh_no.png","/sign_in").permitAll();
+                            , "/images/oh_no.png", "/sign_in").permitAll();
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll())
+//                .logout(logout ->
+//                logout.logoutUrl("/logout").permitAll() // Ścieżka wylogowywania dostępna dla wszystkich
+//        );
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                        .permitAll());
+                                .logoutUrl("/logout")  // Ścieżka wylogowania
+                                .logoutSuccessUrl("/")
+//                        .logoutSuccessUrl("/login?logout")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                                .permitAll()
+                )
+                .csrf(Customizer.withDefaults());
         return http.build();
     }
 
@@ -82,7 +89,6 @@ public class SecurityConfiguration {
                         .permitAll())
                 .build();
     }
-
 
 
 }

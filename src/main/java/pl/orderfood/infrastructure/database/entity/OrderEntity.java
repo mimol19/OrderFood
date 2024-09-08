@@ -23,6 +23,8 @@ public class OrderEntity {
     private Integer orderId;
     @Column(name = "order_number")
     private String orderNumber;
+    @Column(nullable = false)
+    private boolean isCompleted = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")

@@ -6,6 +6,7 @@ import pl.orderfood.business.dao.AddressDAO;
 import pl.orderfood.domain.Address;
 import pl.orderfood.domain.Meal;
 import pl.orderfood.infrastructure.database.entity.AddressEntity;
+import pl.orderfood.infrastructure.database.entity.CustomerEntity;
 import pl.orderfood.infrastructure.database.entity.DeliveryAddressEntity;
 import pl.orderfood.infrastructure.database.entity.RestaurantEntity;
 import pl.orderfood.infrastructure.database.repository.jpa.AddressJpaRepository;
@@ -41,6 +42,21 @@ public class AddressRepository implements AddressDAO {
         }
 
         deliveryAddressRepository.save(saved, username);
+        return addressEntityMapper.mapFromEntity(saved);
+    }
+
+    @Override
+    public Address saveAddress(Address address) {
+        AddressEntity toSave = addressEntityMapper.mapToEntity(address);
+
+        Optional<AddressEntity> existingAddress = addressJpaRepository.
+                findByNameAndNumber(toSave.getName(), toSave.getNumber());
+
+        if (existingAddress.isPresent()) {
+            return addressEntityMapper.mapFromEntity(existingAddress.get());
+        }
+
+        AddressEntity saved = addressJpaRepository.save(toSave);
         return addressEntityMapper.mapFromEntity(saved);
     }
 

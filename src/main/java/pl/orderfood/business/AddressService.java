@@ -18,4 +18,10 @@ public class AddressService {
     public Address saveAddress(Address address, String username) {
         return addressDAO.saveAddress(address, username);
     }
+    @Transactional
+    public Address saveAddress(Address address) {
+        return addressDAO.saveAddress(address);
+    }
+
+
 }

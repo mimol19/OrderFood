@@ -23,8 +23,14 @@
 </div>
 
 <div class="container">
-    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>
-</div>
+    <div class="col-md-6">
+        <form th:action="@{/logout}" method="post" th:if="${#authorization.expression('isAuthenticated()')}">
+            <input type="submit" value="Log out" class="btn btn-danger">
+        </form>
+        <a th:href="@{/login}" class="btn btn-primary" th:unless="${#authorization.expression('isAuthenticated()')}">
+            Log in
+        </a>
+    </div></div>
 
 <div class="container">
     <div class="row mt-3">
@@ -36,10 +42,8 @@
     <br>
     <br>
 
-    <h2>Your menu</h2>
-
     <form th:action="@{/create_order}" method="post" th:object="${orderDTO}">
-        <input type="hidden" th:field="*{restaurant.restaurantId}" th:value="${restaurantId}"/>
+        <input type="hidden" name="restaurantId" th:value="${restaurantId}"/>
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -59,8 +63,8 @@
                 <td><img th:src="'data:image/jpeg;base64,' + ${meal.mealPhoto}" alt="Meal Photo" class="meal-photo"/></td>
                 <td th:text="${meal.price}"></td>
                 <td>
+                    <input type="text" th:field="*{itemList[__${iterStat.index}__].quantity}"/>
                     <input type="hidden" th:field="*{itemList[__${iterStat.index}__].meal.mealId}" th:value="${meal.mealId}"/>
-                    <input type="text" th:field="*{itemList[__${iterStat.index}__].quantity}" class="form-control quantity-input" placeholder="Enter quantity"/>
                 </td>
             </tr>
             </tbody>
@@ -69,23 +73,28 @@
         <h2>Customer Details</h2>
         <div class="form-group">
             <label for="customerName">Name</label>
-            <input type="text" id="customerName" th:field="*{customer.name}" class="form-control" placeholder="Enter name"/>
+            <input type="text" id="customerName" th:field="*{customer.name}" class="form-control"
+                   placeholder="Enter name"/>
         </div>
         <div class="form-group">
             <label for="customerSurname">Surname</label>
-            <input type="text" id="customerSurname" th:field="*{customer.surname}" class="form-control" placeholder="Enter surname"/>
+            <input type="text" id="customerSurname" th:field="*{customer.surname}" class="form-control"
+                   placeholder="Enter surname"/>
         </div>
         <div class="form-group">
             <label for="customerEmail">Email</label>
-            <input type="email" id="customerEmail" th:field="*{customer.email}" class="form-control" placeholder="Enter email"/>
+            <input type="email" id="customerEmail" th:field="*{customer.email}" class="form-control"
+                   placeholder="Enter email"/>
         </div>
         <div class="form-group">
             <label for="customerAddress">Address</label>
-            <input type="text" id="customerAddress" th:field="*{customer.address.name}" class="form-control" placeholder="Enter address"/>
+            <input type="text" id="customerAddress" th:field="*{customer.address.name}" class="form-control"
+                   placeholder="Enter address"/>
         </div>
         <div class="form-group">
             <label for="customerNumber">Number</label>
-            <input type="text" id="customerNumber" th:field="*{customer.address.number}" class="form-control" placeholder="Enter city"/>
+            <input type="text" id="customerNumber" th:field="*{customer.address.number}" class="form-control"
+                   placeholder="Enter number"/>
         </div>
         <div class="row mt-3">
             <div class="col-md-4">

@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import pl.orderfood.api.dto.AddressDTO;
 import pl.orderfood.api.dto.MealDTO;
 import pl.orderfood.api.dto.OrderDTO;
@@ -33,4 +36,12 @@ public class OrderController {
                 .map(orderMapper::mapToDTO)
                 .toList();
     }
+
+    @PostMapping("/complete_order/{orderId}")
+    public String completeOrder(@PathVariable Integer orderId) {
+        orderService.completeOrder(orderId);
+
+        return "redirect:/restaurant_orders";
+    }
+
 }

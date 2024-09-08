@@ -10,10 +10,31 @@
     <title>OrderFood</title>
 </head>
 <body>
+<!--<form th:action="@{/logout}" method="post">-->
+<!--    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>-->
+<!--</form>-->
+
+<!--<form th:action="@{/logout}" method="post">-->
+<!--    <div class="col-md-6">-->
+<!--        <input type="submit" value="Log out!" class="btn btn-danger">-->
+<!--    </div>-->
+<!--</form>-->
+
+
+<!--<div class="container">-->
+<!--    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>-->
+<!--</div>-->
 <div class="container">
-    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>
-</div>
-<div class="container">
+    <div class="col-md-6">
+        <form th:action="@{/logout}" method="post" th:if="${#authorization.expression('isAuthenticated()')}">
+            <input type="submit" value="Log out" class="btn btn-danger">
+        </form>
+        <a th:href="@{/login}" class="btn btn-primary" th:unless="${#authorization.expression('isAuthenticated()')}">
+            Log in
+        </a>
+    </div>
+
+
     <h1>OrderFood</h1>
     <div class="row mt-3">
         <div class="col-md-4">

@@ -12,6 +12,16 @@
 
 <body>
 <div class="container">
+    <div class="col-md-6">
+        <form th:action="@{/logout}" method="post" th:if="${#authorization.expression('isAuthenticated()')}">
+            <input type="submit" value="Log out" class="btn btn-danger">
+        </form>
+        <a th:href="@{/login}" class="btn btn-primary" th:unless="${#authorization.expression('isAuthenticated()')}">
+            Log in
+        </a>
+    </div>
+</div>
+<div class="container">
     <div class="row mt-3">
         <div class="col-md-4">
             <a th:href="@{/}" class="btn btn-info" role="button">Go back to the main page</a>

@@ -11,8 +11,8 @@ import pl.orderfood.domain.Customer;
 @Service
 @AllArgsConstructor
 public class CustomerService {
-private final CustomerDAO customerDAO;
-private final AddressService addressService;
+    private final CustomerDAO customerDAO;
+    private final AddressService addressService;
     public Customer saveCustomer(Customer customer) {
         Address address = customer.getAddress();
         System.out.println();

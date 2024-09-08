@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface AddressDAO {
     Address saveAddress(Address address, String username);
+    Address saveAddress(Address address);
 
     Address getByName(Address address);
 }

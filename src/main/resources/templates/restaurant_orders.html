@@ -16,7 +16,6 @@
         }
 
 
-
     </style>
 </head>
 
@@ -26,7 +25,14 @@
 </div>
 
 <div class="container">
-    <a th:href="@{/logout}" class="btn btn-danger">Log out</a>
+    <div class="col-md-6">
+        <form th:action="@{/logout}" method="post" th:if="${#authorization.expression('isAuthenticated()')}">
+            <input type="submit" value="Log out" class="btn btn-danger">
+        </form>
+        <a th:href="@{/login}" class="btn btn-primary" th:unless="${#authorization.expression('isAuthenticated()')}">
+            Log in
+        </a>
+    </div>
 </div>
 
 <div class="container">
@@ -44,23 +50,51 @@
     <table class="table">
         <thead class="table-dark">
         <tr>
-            <th>Order Number:</th>
-            <th>Customer:</th>
-            <th>Delivery Address:</th>
+            <th>Order Number and Customer</th>
+            <th>Ordered Item</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="order : ${orderList}">
-            <td th:text="${order.orderNumber}"></td>
-            <td th:text="${order.customer.name}"></td>
-            <td th:text="${order.customer.address.name}"></td>
+            <!-- Kolumna z numerem zamówienia i danymi zamawiającego -->
+            <td rowspan="${#lists.size(order.itemList)}">
+                <div>
+                    <strong>Order Number:</strong> <span th:text="${order.orderNumber}"></span>
+                </div>
+                <div>
+                    <strong>Customer:</strong>
+                    <span th:text="${order.customer.name}"></span>
+                    <span th:text="${order.customer.surname}"></span>
+                </div>
+                <div>
+                    <strong>Delivery Address:</strong>
+                    <span th:text="${order.customer.address.name}"></span>,
+                    <span th:text="${order.customer.address.number}"></span>
+                </div>
+            </td>
+
             <td>
-            <a th:href="@{/order_details/{orderId=${order.id}}" class="btn btn-info" role="button">Ordered meals</a>
+                <ul>
+                    <li th:each="item : ${order.itemList}">
+                        <span th:text="${item.meal.name}">Item Name</span> - <span th:text="${item.quantity}">Quantity</span>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <!-- Dodajemy link do zmiany statusu zamówienia -->
+                        <form th:action="@{/complete_order/{orderId}(orderId=${order.orderId})}" method="post">
+                            <button type="submit" class="btn btn-info">Complete order</button>
+                        </form>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
+
 </div>
 </body>
 </html>

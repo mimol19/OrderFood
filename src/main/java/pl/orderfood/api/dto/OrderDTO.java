@@ -15,6 +15,7 @@ public class OrderDTO {
     private String orderNumber;
     private RestaurantDTO restaurant;
     private CustomerDTO customer;
+    private boolean isCompleted;
     private List<ItemDTO> itemList;
 }
 

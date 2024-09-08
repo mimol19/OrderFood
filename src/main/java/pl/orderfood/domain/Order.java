@@ -1,20 +1,18 @@
 package pl.orderfood.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @With
-@Value
+@Data
 @Builder
 @EqualsAndHashCode(of = "orderId")
 @ToString(of = "orderNumber")
 public class Order {
     Integer orderId;
-    Integer orderNumber;
+    String orderNumber;
+    boolean isCompleted;
     Restaurant restaurant;
     Customer customer;
     List<Item> itemList;
