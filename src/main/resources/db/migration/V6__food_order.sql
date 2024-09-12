@@ -4,6 +4,7 @@ CREATE TABLE food_order
     order_number        VARCHAR(64)       NOT NULL,
     restaurant_id       INT         NOT NULL,
     customer_id         INT         NOT NULL,
+    is_completed BOOLEAN DEFAULT false NOT NULL,
     PRIMARY KEY (order_id),
     CONSTRAINT fk_order_restaurant
         FOREIGN KEY(restaurant_id)

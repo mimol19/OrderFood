@@ -1,8 +1,16 @@
+CREATE TABLE order_food_role
+(
+    role_id SERIAL      NOT NULL,
+    role    VARCHAR(20) NOT NULL,
+    PRIMARY KEY (role_id)
+);
+
 CREATE TABLE order_food_user
 (
     user_id   SERIAL        NOT NULL,
     user_name VARCHAR(32)   NOT NULL,
     restaurant_id         INT     ,
+    role_id      INT  NOT NULL,
     email     VARCHAR(32)   NOT NULL,
     password  VARCHAR(128)  NOT NULL,
     active    BOOLEAN       NOT NULL,
@@ -11,9 +19,14 @@ CREATE TABLE order_food_user
       UNIQUE (email),
           CONSTRAINT fk_user_restaurant
             FOREIGN KEY (restaurant_id)
-            REFERENCES restaurant (restaurant_id)
+            REFERENCES restaurant (restaurant_id),
+          CONSTRAINT fk_user_role
+             FOREIGN KEY (role_id)
+             REFERENCES order_food_role (role_id)
 );
 
+INSERT INTO order_food_role (role) VALUES ('RESTAURANT');
+INSERT INTO order_food_role (role) VALUES ('CUSTOMER');
 
 --CREATE TABLE users (
 --    id INT PRIMARY KEY AUTO_INCREMENT,

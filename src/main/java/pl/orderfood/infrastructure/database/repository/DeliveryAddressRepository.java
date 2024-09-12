@@ -27,7 +27,7 @@ public class DeliveryAddressRepository {
 
         DeliveryAddressEntity toSave = new DeliveryAddressEntity();
 
-        UserEntity user = userRepository.findByUserName(username);
+        UserEntity user = userRepository.findByUsername(username);
         RestaurantEntity restaurant = user.getRestaurant();
 
         toSave.setRestaurant(restaurant);

@@ -23,7 +23,7 @@ public class MealRepository implements MealDAO {
 
     @Override
     public List<Meal> getRestaurantMeals(String username) {
-        UserEntity user = userRepository.findByUserName(username);
+        UserEntity user = userRepository.findByUsername(username);
         RestaurantEntity restaurant = user.getRestaurant();
 
         List<MealEntity> meals =mealJpaRepository.findByRestaurantIdOrderByCategory(restaurant.getRestaurantId());
@@ -35,7 +35,7 @@ public class MealRepository implements MealDAO {
     public Meal saveMeal(Meal meal, String username) {
         MealEntity toSave = mealEntityMapper.mapToEntity(meal);
 
-        UserEntity user = userRepository.findByUserName(username);
+        UserEntity user = userRepository.findByUsername(username);
         RestaurantEntity restaurant = user.getRestaurant();
 
         toSave.setRestaurant(restaurant);

@@ -1,1 +1,0 @@
-ALTER TABLE food_order ADD COLUMN is_completed BOOLEAN DEFAULT false NOT NULL;

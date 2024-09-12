@@ -74,7 +74,7 @@ public class CustomerController {
         return "menu";
     }
 
-    @PostMapping("create_order")
+    @PostMapping("/create_order")
     public String addItem(@ModelAttribute("orderDTO") OrderDTO orderDTO,
                           @ModelAttribute("customerDTO") CustomerDTO customerDTO,
                           @RequestParam("restaurantId") String restaurantId

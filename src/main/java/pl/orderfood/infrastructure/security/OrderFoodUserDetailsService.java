@@ -15,24 +15,38 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderFoodUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByUserName(username);
+        UserEntity user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return User.builder()
-                .username(user.getUserName())
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
                 .password(user.getPassword())
+                .authorities(user.getAuthorities())
+                .accountLocked(!user.isAccountNonLocked())
+                .accountExpired(!user.isAccountNonExpired())
+                .credentialsExpired(!user.isCredentialsNonExpired())
+                .disabled(!user.isEnabled())
                 .build();
+
     }
 
     @Transactional
-    public UserEntity saveUser(UserEntity user) {
+    public UserEntity saveUser(UserEntity user, String roleName) {
+        RoleEntity role = roleRepository.findByRole(roleName);  // Znajdź rolę po nazwie
+        if (role == null) {
+            throw new IllegalArgumentException("Invalid role: " + roleName);
+        }
+
+        user.setRoleEntity(role);
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         return userRepository.save(user);

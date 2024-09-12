@@ -43,10 +43,10 @@ public class OrderRepository implements OrderDAO {
 
     @Override
     public List<Order> getRestaurantOrders(String username) {
-        UserEntity user = userRepository.findByUserName(username);
+        UserEntity user = userRepository.findByUsername(username);
         RestaurantEntity restaurant = user.getRestaurant();
 
-        List<OrderEntity> orders = orderJpaRepository.findByRestaurant(restaurant);
+        List<OrderEntity> orders = orderJpaRepository.findByRestaurantAndIsCompletedFalse(restaurant);
         setItemList(orders);
 
 

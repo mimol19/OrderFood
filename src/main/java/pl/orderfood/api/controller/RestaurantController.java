@@ -49,7 +49,7 @@ public class RestaurantController {
     @GetMapping(value = RESTAURANT)
     public String RestaurantPage(Model model, Principal principal) {
         String username = principal.getName();
-        UserEntity user = userRepository.findByUserName(username);
+        UserEntity user = userRepository.findByUsername(username);
         RestaurantEntity existing = user.getRestaurant();
 
         if (existing != null) {

@@ -25,7 +25,7 @@
     <br>
 </div>
 <div class="container">
-    <h2>Create Restaurant</h2>
+    <h2>Create Account</h2>
     <div class="col-md-6">
         <form action="#" th:action="@{/sign_in}" method="POST" th:object="${userEntity}">
             <div class="row mt-3">
@@ -34,7 +34,7 @@
                         <label for="username">Username:</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" id="username" name="username" th:field="*{userName}">
+                        <input type="text" id="username" name="username" th:field="*{username}">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -50,10 +50,25 @@
                         <label for="password">Password:</label>
                     </div>
                     <div class="col-md-3">
-                        <input type="password" id="password" name="password"th:field="*{password}">
+                        <input type="password" id="password" name="password" th:field="*{password}">
                     </div>
                 </div>
-
+                <!-- Dodaj wybór roli -->
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <label>Choose your role:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <div>
+                            <input type="radio" id="role_customer" name="role" value="CUSTOMER">
+                            <label for="role_customer">Customer</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="role_restaurant" name="role" value="RESTAURANT">
+                            <label for="role_restaurant">Restaurant</label>
+                        </div>
+                    </div>
+                </div>
                 <br>
             </div>
             <div class="row mt-3">

@@ -33,7 +33,7 @@ public class RestaurantRepository implements RestaurantDAO {
     public Restaurant saveRestaurant(Restaurant restaurant, String username) {
         RestaurantEntity toSave = restaurantEntityMapper.mapToEntity(restaurant);
         RestaurantEntity saved = restaurantJpaRepository.save(toSave);
-        UserEntity user = userRepository.findByUserName(username);
+        UserEntity user = userRepository.findByUsername(username);
         user.setRestaurant(saved);
         return restaurantEntityMapper.mapFromEntity(saved);
 

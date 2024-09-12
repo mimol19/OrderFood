@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface OrderJpaRepository extends JpaRepository<OrderEntity,Integer> {
-    List<OrderEntity> findByRestaurant(RestaurantEntity restaurant);
+    List<OrderEntity> findByRestaurantAndIsCompletedFalse(RestaurantEntity restaurant);
 }
