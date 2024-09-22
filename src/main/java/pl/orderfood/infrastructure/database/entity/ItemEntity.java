@@ -24,7 +24,7 @@ public class ItemEntity {
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "meal_id")
     private MealEntity meal;
 }

@@ -1,5 +1,7 @@
 package pl.orderfood.infrastructure.database.repository;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.orderfood.business.dao.OrderDAO;
@@ -13,6 +15,7 @@ import pl.orderfood.infrastructure.database.repository.mapper.OrderEntityMapper;
 import pl.orderfood.infrastructure.security.UserEntity;
 import pl.orderfood.infrastructure.security.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,9 +40,21 @@ public class OrderRepository implements OrderDAO {
             itemJpaRepository.save(item);
         }
 
-
         return orderEntityMapper.mapFromEntity(saved);
     }
+
+
+    @Override
+    public Order getOrder(Integer id) {
+        Optional<OrderEntity> savedAndFetched = orderJpaRepository.findById(id);
+
+        if (savedAndFetched.isPresent()) {
+            return orderEntityMapper.mapFromEntity(savedAndFetched.get());
+        } else {
+            throw new EntityNotFoundException("OrderEntity with ID " + id + " not found");
+        }
+    }
+
 
     @Override
     public List<Order> getRestaurantOrders(String username) {
@@ -47,7 +62,6 @@ public class OrderRepository implements OrderDAO {
         RestaurantEntity restaurant = user.getRestaurant();
 
         List<OrderEntity> orders = orderJpaRepository.findByRestaurantAndIsCompletedFalse(restaurant);
-        setItemList(orders);
 
 
         return orders.stream().map(orderEntityMapper::mapFromEntity).toList();
@@ -66,11 +80,4 @@ public class OrderRepository implements OrderDAO {
         return orderEntityMapper.mapFromEntity(saved);
     }
 
-    private void setItemList(List<OrderEntity> orders) {
-        for (OrderEntity order : orders) {
-            List<ItemEntity> items = itemJpaRepository.findByOrder(order);
-            order.setItemList(items);
-        }
-
-    }
 }

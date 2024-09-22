@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>OrderFood</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <a th:href="@{/}" class="btn btn-info" role="button">Go back to the main page</a>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div class="container">
+    <div class="col-md-6">
+        <h1>Order Details</h1>
+
+        <!-- Dane zamówienia -->
+        <div>
+            <p><strong>Order Number:</strong> <span th:text="${savedOrder.orderNumber}"></span></p>
+            <!--        <p><strong>Total Amount:</strong> $<span th:text="${savedOrder.amount}"></span></p>-->
+        </div>
+
+        <!-- Dane restauracji -->
+        <div>
+            <p><strong>Restaurant Name:</strong> <span th:text="${savedOrder.restaurant.name}"></span></p>
+        </div>
+
+        <!-- Dane kupującego -->
+        <div>
+            <p><strong>Customer Name:</strong>
+                <span th:text="${savedOrder.customer.name}"></span>
+                <span th:text="${savedOrder.customer.surname}"></span>
+            </p>
+            <p><strong>Email:</strong> <span th:text="${savedOrder.customer.email}"></span></p>
+            <p><strong>Address:</strong>
+                <span th:text="${savedOrder.customer.address.name}"></span>,
+                <span th:text="${savedOrder.customer.address.number}"></span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Lista przedmiotów -->
+<div class="container">
+    <div class="col-md-6">
+        <h2>Items List</h2>
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${savedOrder.itemList}">
+                <td th:text="${item.meal.name}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td>PLN<span th:text="${item.meal.price}"></span></td>
+                <!--                <td>$<span th:text="${item.quantity * item.price}"></span></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+<!--<h1>Pay for your order</h1>-->
+
+<!--&lt;!&ndash; Dodanie ID do formularza &ndash;&gt;-->
+<!--<form id="checkout-form">-->
+<!--    <input type="hidden" name="amount" value="50" />-->
+<!--    <div class="row mt-3">-->
+<!--        <div class="col-md-6">-->
+<!--            <button type="submit" class="btn btn-success">Pay</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</form>-->
+
+<!--<script>-->
+<!--    document.getElementById("checkout-form").addEventListener("submit", async (event) => {-->
+<!--       event.preventDefault();-->
+
+<!--       // Wywołaj backend, aby stworzyć sesję Stripe-->
+<!--       const response = await fetch("/orderfood/payment/create-checkout-session?amount=5000&currency=usd&successUrl=http://localhost:8190/orderfood/success&cancelUrl=http://localhost:8190/orderfood/cancel", {-->
+<!--           method: "POST"-->
+<!--       });-->
+
+<!--       if (response.ok) {-->
+<!--           const sessionId = await response.text();-->
+
+<!--           // Użyj Stripe.js, aby przekierować użytkownika-->
+<!--           const stripe = Stripe('pk_test_your_public_key');  // Użyj swojego klucza publicznego Stripe-->
+<!--           const { error } = await stripe.redirectToCheckout({ sessionId });-->
+
+<!--           if (error) {-->
+<!--               console.error("Error:", error);-->
+<!--           }-->
+<!--       } else {-->
+<!--           console.error("Error: Failed to create checkout session", response.statusText);-->
+<!--       }-->
+<!--   });-->
+<!--</script>-->
+
+</body>
+</html>

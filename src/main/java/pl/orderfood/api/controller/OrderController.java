@@ -26,6 +26,7 @@ public class OrderController {
     public String showRestaurantOrders(Model model, Principal principal) {
         String username = principal.getName();
         List<OrderDTO> orderList = getRestaurantOrders(username);
+        System.out.println(orderList.getFirst().getItemList().getFirst().getMeal().getName());
         model.addAttribute("orderList", orderList);
 
         return "restaurant_orders";
@@ -43,5 +44,6 @@ public class OrderController {
 
         return "redirect:/restaurant_orders";
     }
+
 
 }

@@ -58,23 +58,24 @@ public class SecurityConfiguration {
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/login", "/", "/register", "/error"
-                            , "/images/oh_no.png", "/sign_in").permitAll()
-                                    .requestMatchers("/restaurant","/existing_restaurant","/add_restaurant"
-                                            ,"/add_meal","/add_delivery_street","/restaurant_orders"
-                                            ,"/complete_order").hasAuthority("RESTAURANT")
-                                    .requestMatchers("/customer", "/street","/find_restaurant",
-                                            "/select_restaurant","/create_order").hasAuthority("CUSTOMER")
-                                    .anyRequest().authenticated();
+                                    , "/images/oh_no.png", "/sign_in","/payment/**").permitAll()
+                            .requestMatchers("/restaurant", "/existing_restaurant", "/add_restaurant"
+                                    , "/add_meal", "/add_delivery_street", "/restaurant_orders"
+                                    , "/complete_order").hasAuthority("RESTAURANT")
+                            .requestMatchers("/customer", "/street", "/find_restaurant",
+                                    "/select_restaurant", "/create_order")
+                            .hasAuthority("CUSTOMER")
+                            .anyRequest().authenticated();
                 })
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll())
                 .logout(logout -> logout
-                                .logoutUrl("/logout")  // Ścieżka wylogowania
-                                .logoutSuccessUrl("/")
-                                .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID")
-                                .permitAll()
+                        .logoutUrl("/logout")  // Ścieżka wylogowania
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
                 )
                 .csrf(Customizer.withDefaults());
         return http.build();

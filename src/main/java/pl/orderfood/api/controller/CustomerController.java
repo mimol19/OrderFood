@@ -12,6 +12,7 @@ import pl.orderfood.business.RestaurantService;
 import pl.orderfood.domain.Address;
 
 import pl.orderfood.domain.Order;
+import pl.orderfood.infrastructure.database.repository.OrderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class CustomerController {
     private final MealMapper mealMapper;
     private final OrderMapper orderMapper;
     private final AddressMapper addressMapper;
+    OrderRepository orderRepository;
 
     @GetMapping("/street")
     public String showStreetForm(Model model) {
@@ -49,6 +51,7 @@ public class CustomerController {
         model.addAttribute("restaurantList", restaurantList);
         return "restaurants_result";
     }
+
 
     @PostMapping("/select_restaurant/{restaurantId}")
     public String selectRestaurant(@PathVariable Integer restaurantId, Model model) {
@@ -77,7 +80,8 @@ public class CustomerController {
     @PostMapping("/create_order")
     public String addItem(@ModelAttribute("orderDTO") OrderDTO orderDTO,
                           @ModelAttribute("customerDTO") CustomerDTO customerDTO,
-                          @RequestParam("restaurantId") String restaurantId
+                          @RequestParam("restaurantId") String restaurantId,
+                          Model model
     ) {
         System.out.println("ordeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
         System.out.println("Order Details:");
@@ -92,9 +96,15 @@ public class CustomerController {
 
         Order order = orderMapper.mapFromDTO(orderDTO);
 
-        orderService.saveOrderAndCustomer(order);
-        return "order";
+        Order savedOrder = orderService.saveOrderAndCustomer(order);
+        System.out.println("Order id:" + savedOrder.getOrderId());
+
+        model.addAttribute("savedOrder", savedOrder);
+
+        return "payment";
     }
+
+
     private List<MealDTO> getMealsByRestaurant(Integer id) {
         return mealService.getMealsByRestaurant(id).stream()
                 .map(mealMapper::mapToDTO).toList();

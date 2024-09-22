@@ -21,8 +21,15 @@ public class OrderService {
     private final OrderDAO orderDAO;
     private final CustomerService customerService;
 
-    @Transactional
+
     public Order saveOrderAndCustomer(Order order) {
+        Order saved = saveOrder(order);
+        Order savedAndFetched = orderDAO.getOrder(saved.getOrderId());
+        return savedAndFetched;
+    }
+
+    @Transactional
+    private Order saveOrder(Order order) {
         Customer customer = customerService.saveCustomer(order.getCustomer());
         order.setCustomer(customer);
         return orderDAO.saveOrder(order);

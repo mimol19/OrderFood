@@ -17,6 +17,8 @@ public class OrderDTO {
     private CustomerDTO customer;
     private boolean isCompleted;
     private List<ItemDTO> itemList;
+    private Long amount;
+
 }
 
 

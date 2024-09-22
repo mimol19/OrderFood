@@ -11,4 +11,6 @@ public interface OrderDAO {
     List<Order> getRestaurantOrders(String username);
 
     Order completeOrder(Integer orderId);
+
+    Order getOrder(Integer id);
 }
