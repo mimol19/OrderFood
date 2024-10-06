@@ -12,8 +12,8 @@ import java.util.List;
 public class Order {
     Integer orderId;
     String orderNumber;
-    boolean isCompleted;
     Restaurant restaurant;
     Customer customer;
+    boolean completed;
     List<Item> itemList;
 }

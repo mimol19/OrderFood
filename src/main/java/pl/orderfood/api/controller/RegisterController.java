@@ -33,7 +33,6 @@ public class RegisterController {
             return "error";
         }
 
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         userDetailsService.saveUser(user,role);
         return "home";
     }

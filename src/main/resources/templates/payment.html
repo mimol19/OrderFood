@@ -26,25 +26,25 @@
 
         <!-- Dane zamówienia -->
         <div>
-            <p><strong>Order Number:</strong> <span th:text="${savedOrder.orderNumber}"></span></p>
-            <!--        <p><strong>Total Amount:</strong> $<span th:text="${savedOrder.amount}"></span></p>-->
+            <p><strong>Order Number:</strong> <span th:text="${orderDTO.orderNumber}"></span></p>
+            <!--        <p><strong>Total Amount:</strong> $<span th:text="${orderDTO.amount}"></span></p>-->
         </div>
 
         <!-- Dane restauracji -->
         <div>
-            <p><strong>Restaurant Name:</strong> <span th:text="${savedOrder.restaurant.name}"></span></p>
+            <p><strong>Restaurant Name:</strong> <span th:text="${orderDTO.restaurant.name}"></span></p>
         </div>
 
         <!-- Dane kupującego -->
         <div>
             <p><strong>Customer Name:</strong>
-                <span th:text="${savedOrder.customer.name}"></span>
-                <span th:text="${savedOrder.customer.surname}"></span>
+                <span th:text="${orderDTO.customer.name}"></span>
+                <span th:text="${orderDTO.customer.surname}"></span>
             </p>
-            <p><strong>Email:</strong> <span th:text="${savedOrder.customer.email}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${orderDTO.customer.email}"></span></p>
             <p><strong>Address:</strong>
-                <span th:text="${savedOrder.customer.address.name}"></span>,
-                <span th:text="${savedOrder.customer.address.number}"></span>
+                <span th:text="${orderDTO.customer.address.name}"></span>,
+                <span th:text="${orderDTO.customer.address.number}"></span>
             </p>
         </div>
     </div>
@@ -64,7 +64,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${savedOrder.itemList}">
+            <tr th:each="item : ${orderDTO.itemList}">
                 <td th:text="${item.meal.name}"></td>
                 <td th:text="${item.quantity}"></td>
                 <td>PLN<span th:text="${item.meal.price}"></span></td>

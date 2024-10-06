@@ -1,5 +1,6 @@
 package pl.orderfood.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Controller;
@@ -35,8 +36,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class RestaurantController {
-    static final String RESTAURANT = "/restaurant";
-    static final String EXISTING_RESTAURANT = "/existing_restaurant";
     private final RestaurantService restaurantService;
     private final MealService mealService;
     private final AddressService addressService;
@@ -46,7 +45,7 @@ public class RestaurantController {
     private final UserRepository userRepository;
 
 
-    @GetMapping(value = RESTAURANT)
+    @GetMapping(value = "/restaurant")
     public String RestaurantPage(Model model, Principal principal) {
         String username = principal.getName();
         UserEntity user = userRepository.findByUsername(username);
@@ -62,24 +61,21 @@ public class RestaurantController {
 
     @PostMapping(value = "/add_restaurant")
     public String createRestaurant(
-            @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO, @ModelAttribute("mealDTO") MealDTO mealDTO,
+            @Valid @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO, @ModelAttribute("mealDTO") MealDTO mealDTO,
             BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return "error";
         }
 
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         String username = principal.getName();
         Restaurant restaurant = restaurantMapper.map(restaurantDTO);
         restaurantService.saveRestaurant(restaurant, username);
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         return "redirect:/existing_restaurant";
     }
 
-    @GetMapping(value = EXISTING_RESTAURANT)
+    @GetMapping(value ="/existing_restaurant")
     public String listMeals(Model model, Principal principal) {
-        System.out.println("getmapping existingrestaurant");
         MealDTO mealDTO = new MealDTO();
         model.addAttribute("mealDTO", mealDTO);
         AddressDTO addressDTO = new AddressDTO();
@@ -95,17 +91,16 @@ public class RestaurantController {
 
     @PostMapping(value = "/add_meal")
     public String createMeal(
-            @ModelAttribute("mealDTO") MealDTO mealDTO, @ModelAttribute("photo") MultipartFile photo,
+            @Valid @ModelAttribute("mealDTO") MealDTO mealDTO, @ModelAttribute("photo") MultipartFile photo,
             BindingResult result, Principal principal) throws IOException {
         if (result.hasErrors()) {
-            return "existing_restaurant";
+            return "error";
         }
 
         String base64Photo = convertToBase64(photo);
         mealDTO.setMealPhoto(base64Photo);
 
         String username = principal.getName();
-        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         Meal meal = mealMapper.mapFromDTO(mealDTO);
 
         mealService.saveMeal(meal, username);
@@ -114,14 +109,13 @@ public class RestaurantController {
 
     @PostMapping(value = "add_delivery_street")
     public String addDeliveryStreet(
-            @ModelAttribute("addressDTO") AddressDTO addressDTO,
+           @Valid @ModelAttribute("addressDTO") AddressDTO addressDTO,
             BindingResult result, Principal principal) throws IOException {
         if (result.hasErrors()) {
-            return "existing_restaurant";
+            return "error";
         }
 
         String username = principal.getName();
-        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         addressDTO.setNumber(0);
         Address address = addressMapper.mapFromDTO(addressDTO);
 
@@ -140,6 +134,5 @@ public class RestaurantController {
                 .map(mealMapper::mapToDTO)
                 .toList();
     }
-
 
 }

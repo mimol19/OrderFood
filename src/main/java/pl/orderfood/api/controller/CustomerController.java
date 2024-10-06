@@ -1,8 +1,10 @@
 package pl.orderfood.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.orderfood.api.dto.*;
 import pl.orderfood.api.dto.mapper.*;
@@ -14,6 +16,7 @@ import pl.orderfood.domain.Address;
 import pl.orderfood.domain.Order;
 import pl.orderfood.infrastructure.database.repository.OrderRepository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +43,12 @@ public class CustomerController {
     }
 
     @GetMapping("/find_restaurant")
-    public String findRestaurants(@ModelAttribute("addressDTO") AddressDTO addressDTO,
+    public String findRestaurants(@Valid @ModelAttribute("addressDTO") AddressDTO addressDTO, BindingResult result,
                                   Model model) {
-        System.out.println("ffffffffffffffffffffffffffffffffffffffffssssssssssssssssssssssssssssssss");
+        if (result.hasErrors()) {
+            return "error";
+        }
+
         System.out.println(addressDTO);
         Address address = addressMapper.mapFromDTO(addressDTO);
 
@@ -62,48 +68,18 @@ public class CustomerController {
         for (MealDTO meal : mealList) {
             ItemDTO item = new ItemDTO();
             item.setMeal(meal);
+            item.setQuantity(0);
             itemList.add(item);
-            System.out.println(meal);
         }
 
         orderDTO.setItemList(itemList);
-        for (ItemDTO item : itemList) {
-            System.out.println(item);
-        }
+
         model.addAttribute("restaurantId", restaurantId);
         model.addAttribute("mealList", mealList);
         model.addAttribute("orderDTO", orderDTO);
 
         return "menu";
     }
-
-    @PostMapping("/create_order")
-    public String addItem(@ModelAttribute("orderDTO") OrderDTO orderDTO,
-                          @ModelAttribute("customerDTO") CustomerDTO customerDTO,
-                          @RequestParam("restaurantId") String restaurantId,
-                          Model model
-    ) {
-        System.out.println("ordeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-        System.out.println("Order Details:");
-        System.out.println(orderDTO);
-        for (ItemDTO item : orderDTO.getItemList()) {
-            System.out.println(item);
-        }
-
-        RestaurantDTO restaurantDTO = new RestaurantDTO();
-        restaurantDTO.setRestaurantId(Integer.valueOf(restaurantId));
-        orderDTO.setRestaurant(restaurantDTO);
-
-        Order order = orderMapper.mapFromDTO(orderDTO);
-
-        Order savedOrder = orderService.saveOrderAndCustomer(order);
-        System.out.println("Order id:" + savedOrder.getOrderId());
-
-        model.addAttribute("savedOrder", savedOrder);
-
-        return "payment";
-    }
-
 
     private List<MealDTO> getMealsByRestaurant(Integer id) {
         return mealService.getMealsByRestaurant(id).stream()

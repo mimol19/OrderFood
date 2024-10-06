@@ -24,7 +24,8 @@ public class OrderEntity {
     @Column(name = "order_number")
     private String orderNumber;
     @Column(nullable = false)
-    private boolean isCompleted = false;
+    @Builder.Default
+    private boolean completed = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")

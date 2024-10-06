@@ -13,10 +13,9 @@ import pl.orderfood.domain.Customer;
 public class CustomerService {
     private final CustomerDAO customerDAO;
     private final AddressService addressService;
+
     public Customer saveCustomer(Customer customer) {
-        Address address = customer.getAddress();
-        System.out.println();
-        Address savedAddress = addressService.saveAddress(address);
+        Address savedAddress = addressService.saveAddress(customer.getAddress());
         customer.setAddress(savedAddress);
         return customerDAO.saveCustomer(customer);
     }

@@ -1,5 +1,8 @@
 package pl.orderfood.api.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 
@@ -9,8 +12,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDTO {
-    Integer itemId;
-    Integer quantity;
-    OrderDTO order;
-    MealDTO meal;
+    @Positive(message = "Item ID must be positive")
+    private Integer itemId;
+
+    @PositiveOrZero(message = "Quantity must be zero or positive")
+    @NotNull
+    private Integer quantity;
+
+    private OrderDTO order;
+
+    @NotNull(message = "Meal cannot be null")
+    private MealDTO meal;
 }

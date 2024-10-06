@@ -31,7 +31,6 @@ public class RestaurantService {
 
     public List<Restaurant> getRestaurantByAddress(Address address) {
         Address found = addressDAO.getByName(address);
-        System.out.println(found);
         return restaurantDAO.getRestaurantByAddress(found);
     }
 }

@@ -36,6 +36,7 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	implementation 'org.thymeleaf:thymeleaf-spring6'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.stripe:stripe-java:22.13.0'
 
 //	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -47,6 +48,7 @@ dependencies {
 }
 
 test {
+	jvmArgs '-XX:+EnableDynamicAgentLoading'
 	useJUnitPlatform()
 	testLogging {
 		events "passed", "skipped", "failed"
@@ -54,3 +56,5 @@ test {
 }
 
 compileJava.options.encoding = 'UTF-8'
+
+

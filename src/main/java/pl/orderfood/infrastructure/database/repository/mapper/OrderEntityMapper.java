@@ -14,8 +14,6 @@ import pl.orderfood.infrastructure.database.entity.OrderEntity;
 
 @Mapper(componentModel = "spring", uses = {CustomerEntityMapper.class, RestaurantEntityMapper.class, ItemEntityMapper.class})
 public interface OrderEntityMapper {
-
     OrderEntity mapToEntity(Order order);
-
     Order mapFromEntity(OrderEntity order);
 }
