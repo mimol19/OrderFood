@@ -9,7 +9,7 @@ Restaurant:
 - Add delivery street
 - View orders
 
-  Client:
+Client:
 - Search for available restuarants
 - Create order
 
